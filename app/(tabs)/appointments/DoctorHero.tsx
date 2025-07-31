@@ -7,9 +7,9 @@ const DoctorHero = () => {
   const router = useRouter();
   return (
     <View className='bg-[#EEF6EA]'>
-    <View className='mt-4 mx-6'>
+    <View className='mt-2 mx-6'>
       {/* Top Row: Back and Title */}
-      <View style={styles.topRow} className='mt-4'>
+      <View style={styles.topRow} className='mt-2'>
         <TouchableOpacity style={styles.iconCircle} onPress={() => router.replace('/') }>
           <Ionicons name="arrow-back-circle" size={22} color="#000" />
         </TouchableOpacity>
@@ -34,7 +34,7 @@ const DoctorHero = () => {
         </View>
         <Image
           source={require('../../../assets/images/doctor.png')}
-          style={{ width: 140, height: 180 }}
+          style={{ width: 140, height: 160 }}
           resizeMode="cover"
         />
       </View>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 16,
   },
   iconCircle: {
     backgroundColor: 'white',
@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 4,
+    marginBottom: 8,
   },
 });
 
