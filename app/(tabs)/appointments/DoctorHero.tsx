@@ -6,16 +6,16 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const DoctorHero = () => {
   const router = useRouter();
   return (
-    <View className='bg-[#EEF6EA]'>
+    <View>
     <View className='mt-2 mx-6'>
       {/* Top Row: Back and Title */}
       <View style={styles.topRow} className='mt-2'>
         <TouchableOpacity style={styles.iconCircle} onPress={() => router.replace('/') }>
-          <Ionicons name="arrow-back-circle" size={22} color="#000" />
+          <Ionicons name="chevron-back" size={24} color="#1F2937" />
         </TouchableOpacity>
         <Text
-          style={styles.title}
           numberOfLines={1}
+          className='text-black text-3xl font-bold Roboto-Regular'
         >
           Check Availability
         </Text>
@@ -34,7 +34,7 @@ const DoctorHero = () => {
         </View>
         <Image
           source={require('../../../assets/images/doctor.png')}
-          style={{ width: 140, height: 160 }}
+          style={{ width: 140, height: 179 }}
           resizeMode="cover"
         />
       </View>
@@ -51,28 +51,21 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   iconCircle: {
-    backgroundColor: 'white',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.4)',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
   },
-  title: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#18181B',
-    marginLeft: 8,
-    marginRight: 8,
-    fontFamily: 'Roboto-Regular',
-  },
+ 
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
