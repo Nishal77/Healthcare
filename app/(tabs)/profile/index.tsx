@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import React from 'react';
-import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import LogoutButton from './LogoutButton';
 import ProfileHeader from './ProfileHeader';
 import ProfileMenu from './ProfileMenu';
@@ -16,9 +16,15 @@ export default function ProfileScreen() {
           <Ionicons name="arrow-back" size={24} color="#222" />
         </TouchableOpacity>
       </View>
-      <ProfileHeader />
-      <ProfileMenu />
-      <LogoutButton />
+      <ScrollView 
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        <ProfileHeader />
+        <ProfileMenu />
+        <LogoutButton />
+      </ScrollView>
     </SafeAreaView>
   );
 }
