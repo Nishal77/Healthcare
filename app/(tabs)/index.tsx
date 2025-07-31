@@ -1,10 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useMemo } from 'react';
-import { Image, Platform, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import ReminderModal from '../modals/ReminderModal';
+import Activity from '../../components/Activity';
+
 export default function DashboardScreen() {
+  const [showReminderModal, setShowReminderModal] = useState(false);
   const greeting = useMemo(() => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Good Morning';
@@ -94,110 +98,8 @@ export default function DashboardScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Upcoming Schedule Section */}
-        <View className="mx-6 mb-4">
-          <Text className="text-xl font-semibold text-gray-900 Roboto">
-            Upcoming Schedule
-          </Text>
-        </View>
-
-        {/* Doctor Card */}
-        <View 
-          className="mx-6 rounded-2xl p-5 mb-6"
-                style={{
-            backgroundColor: '#ADC178',
-            shadowColor: '0px 4px 12px rgba(140, 107, 31, 0.2)',
-            shadowOffset: { width: 0, height: 6 },
-            shadowOpacity: 0.38,
-            shadowRadius: 12,
-            elevation: 6,
-            borderWidth: 1.2,
-            borderColor: 'white',
-          }}
-        >
-          {/* Top Section: Doctor Info */}
-          <View className="flex-row items-center justify-between mb-5">
-            <View className="flex-row items-center gap-4">
-              <View className="w-14 h-14 rounded-full bg-white border-2 items-center justify-center overflow-hidden shadow-sm"
-                style={{ borderColor: '#B2D8B2', shadowColor: '#B2D8B2', shadowOpacity: 0.15, shadowRadius: 6 }}
-              >
-                <Image
-                  source={{ uri: "https://randomuser.me/api/portraits/men/32.jpg" }}
-                  className="w-full h-full rounded-full"
-                  resizeMode="cover"
-                  />
-                </View>
-              <View>
-                <Text style={{ fontSize: 17, fontWeight: '700', color: 'black', fontFamily: 'Roboto-Regular', }}>
-                  Dr. Shylesh B C
-                </Text>
-                <Text style={{ fontSize: 12, color: 'black', fontFamily: 'Roboto-Regular', marginTop: 2 }}>
-                  Mental Consultation
-                </Text>
-              </View>
-            </View>
-            <Pressable
-              style={({ pressed }) => ({
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderWidth: 2.5,
-                borderColor: '#111',
-                borderRadius: 999,
-                paddingVertical: 8,
-                paddingHorizontal: 22,
-                backgroundColor: pressed ? '#F5F5F5' : 'transparent',
-                marginLeft: 8,
-              })}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderWidth: 1.5,
-                  borderColor: '#8C6B1F',
-                  borderRadius: 12,
-                  paddingVertical: 6,
-                  paddingHorizontal: 16,
-                  backgroundColor: '#FFF8E1',
-                  shadowColor: '#8C6B1F',
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.12,
-                  shadowRadius: 4,
-                  marginRight: 8,
-                }}
-              >
-                <Text style={{ fontSize: 18, fontWeight: '600', color: '#111', fontFamily: 'Roboto-Regular', marginRight: 6 }}>Call</Text>
-                <Ionicons name="call-outline" size={20} color="#111" />
-              </View>
-            </Pressable>
-        </View>
-
-          {/* Bottom Section: Date and Time */}
-          <View className="flex-row items-center justify-center gap-6 px-4 py-3 rounded-xl"
-            style={{ backgroundColor: '#D7CDA2' }}
-          >
-            {/* Date Info */}
-            <View className="flex-row items-center gap-2">
-              <Ionicons name="calendar-outline" size={19} color="#D89C00" />
-              <Text style={{ fontSize: 13, fontWeight: '600', color: '#5E4A1E', fontFamily: 'Roboto-Regular' }}>
-                Monday, 26 July
-                    </Text>
-                  </View>
-            {/* Vertical Separator */}
-            <View className="h-6 w-1 mx-1 rounded-full" 
-              style={{ backgroundColor: '#D7CDA2', opacity: 0.5 }} 
-            />
-            {/* Time Info */}
-            <View className="flex-row items-center gap-2">
-              <Ionicons name="time-outline" size={19} color="#D89C00" />
-              <Text style={{ fontSize: 13, fontWeight: '600', color: '#5E4A1E', fontFamily: 'Roboto-Regular' }}>
-                09:00 - 10:00
-                  </Text>
-                </View>
-          </View>
-        </View>
+        {/* Activity Section */}
+        <Activity />
 
         {/* Last Week's Health Overview Section */}
         <View className="mx-6 mb-4 flex-row justify-between items-center">
@@ -214,109 +116,123 @@ export default function DashboardScreen() {
             {
               label: 'Digestion',
               icon: 'restaurant-outline',
-              gradient: ['#DCF5E3', '#EAF6E9'] as [string, string],
-              iconColor: '#4E944F',
-              labelColor: '#215732',
               value: 'Good',
-              valueColor: '#215732',
+              status: 'good',
             },
             {
               label: 'Energy',
               icon: 'flash-outline',
-              gradient: ['#FFE3B3', '#FFF1DB'] as [string, string],
-              iconColor: '#F59E0B',
-              labelColor: '#92400E',
-              value: 'High',
-              valueColor: '#92400E',
+              value: 'Average',
+              status: 'warning',
             },
             {
               label: 'Sleep',
               icon: 'moon-outline',
-              gradient: ['#D8DCFF', '#ECEEFF'] as [string, string],
-              iconColor: '#5A4EBB',
-              labelColor: '#333366',
-              value: '7.5h avg',
-              valueColor: '#5A4EBB',
+              value: '6h avg',
+              status: 'warning',
             },
             {
               label: 'Mood',
               icon: 'happy-outline',
-              gradient: ['#FBD3E9', '#FFF0F3'] as [string, string],
-              iconColor: '#C2185B',
-              labelColor: '#880E4F',
               value: 'Positive',
-              valueColor: '#C2185B',
+              status: 'good',
             },
             {
               label: 'Bowel Movement',
               icon: 'water-outline',
-              gradient: ['#F5E8DA', '#F2EFEA'] as [string, string],
-              iconColor: '#795548',
-              labelColor: '#4E342E',
-              value: 'Regular',
-              valueColor: '#4E342E',
+              value: 'Irregular',
+              status: 'bad',
             },
             {
               label: 'Menstrual Cycle',
               icon: 'female-outline',
-              gradient: ['#FCE1EC', '#FBEFF5'] as [string, string],
-              iconColor: '#D81B60',
-              labelColor: '#880E4F',
-              value: 'Normal',
-              valueColor: '#D81B60',
+              value: 'Irregular',
+              status: 'bad',
             },
-          ].map((item, idx) => (
-            <LinearGradient
-              key={item.label}
-              colors={item.gradient}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={{
-                width: '47%',
-                borderRadius: 16,
-                paddingVertical: 8,
-                paddingHorizontal: 10,
-                marginBottom: 12,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                minHeight: 48,
-                shadowColor: item.iconColor,
-                shadowOpacity: 0.06,
-                shadowRadius: 10,
-                elevation: 1,
-                borderWidth: 1,
-                borderColor: 'rgba(30,30,30,0.13)',
-              }}
-            >
-              <View style={{
-                width: 28,
-                height: 28,
-                borderRadius: 14,
-                backgroundColor: item.iconColor + '22',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginRight: 10,
-              }}>
-                <Ionicons name={item.icon as any} size={16} color={item.iconColor} />
-              </View>
-              <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
-                <Text style={{ fontSize: 12, fontWeight: '600', color: item.labelColor, fontFamily: 'Roboto-Regular', marginBottom: 1 }}>
-                  {item.label}
-                </Text>
-                <Text style={{ fontSize: 13, fontWeight: '500', color: item.valueColor, fontFamily: 'Roboto-Regular' }}>
-                  {item.value}
-                </Text>
-              </View>
-            </LinearGradient>
-          ))}
+          ].map((item, idx) => {
+            let boxColor: [string, string];
+            let iconColor: string;
+            let labelColor: string;
+            let valueColor: string;
+            if (item.status === 'good') {
+              boxColor = ['#DCF5E3', '#B6F0C2']; // green
+              iconColor = '#388E3C';
+              labelColor = '#215732';
+              valueColor = '#215732';
+            } else if (item.status === 'warning') {
+              boxColor = ['#FFF9E3', '#FFE9A7']; // yellow
+              iconColor = '#F59E0B';
+              labelColor = '#B68900';
+              valueColor = '#B68900';
+            } else {
+              boxColor = ['#FDE2E1', '#FFBABA']; // red
+              iconColor = '#D81B60';
+              labelColor = '#B71C1C';
+              valueColor = '#B71C1C';
+            }
+            return (
+              <LinearGradient
+                key={item.label}
+                colors={boxColor}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{
+                  width: '47%',
+                  borderRadius: 14,
+                  paddingVertical: 8,
+                  paddingHorizontal: 10,
+                  marginBottom: 10,
+                  marginRight: idx % 2 === 0 ? '6%' : 0,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  minHeight: 44,
+                  shadowColor: iconColor,
+                  shadowOpacity: 0.06,
+                  shadowRadius: 10,
+                  elevation: 1,
+                  borderWidth: 1,
+                  borderColor: item.status === 'good' ? 'rgba(30,120,30,0.13)' : item.status === 'warning' ? 'rgba(200,180,30,0.13)' : 'rgba(200,30,30,0.13)',
+                }}
+              >
+                <View style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 12,
+                  backgroundColor: iconColor + '22',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: 10,
+                }}>
+                  <Ionicons name={item.icon as any} size={14} color={iconColor} />
+                </View>
+                <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+                  <Text style={{ fontSize: 11, fontWeight: '700', color: labelColor, fontFamily: 'Roboto-Regular', marginBottom: 0 }}>
+                    {item.label}
+                  </Text>
+                  <Text style={{ fontSize: 12, fontWeight: '500', color: valueColor, fontFamily: 'Roboto-Regular' }}>
+                    {item.value}
+                  </Text>
+                </View>
+              </LinearGradient>
+            );
+          })}
         </View>
 
         {/* Daily Reminder Section */}
         <View className="mx-5 mb-0">
-          <Text style={{ fontSize: 18, fontWeight: '700', color: '#1F1F1F', fontFamily: 'Roboto-Regular', marginBottom: 8 }}>
-            Daily Reminder
-          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+            <Text style={{ fontSize: 18, fontWeight: '700', color: '#1F1F1F', fontFamily: 'Roboto-Regular' }}>
+              Daily Reminder
+            </Text>
+            <TouchableOpacity
+              style={{ backgroundColor: '#B99470', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 6 }}
+              onPress={() => setShowReminderModal(true)}
+              activeOpacity={0.8}
+            >
+              <Text style={{ color: 'white', fontWeight: '700', fontSize: 15 }}>Add</Text>
+            </TouchableOpacity>
+          </View>
           {/* Water Reminder */}
           <View
             style={{
@@ -408,6 +324,8 @@ export default function DashboardScreen() {
           </View>
         </View>
       </ScrollView>
+      {/* Reminder Modal */}
+      <ReminderModal visible={showReminderModal} onClose={() => setShowReminderModal(false)} />
     </SafeAreaView>
   );
 }

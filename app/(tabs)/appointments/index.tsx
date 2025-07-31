@@ -40,15 +40,12 @@ const styles = StyleSheet.create({
   },
   bookButton: {
     width: '90%',
-    backgroundColor: '#3B6EF6',
+    backgroundColor: '#283618',
     borderRadius: 28,
     paddingVertical: 18,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#3B6EF6',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.18,
-    shadowRadius: 8,
     elevation: 3,
   },
   bookButtonText: {

@@ -11,7 +11,7 @@ const DoctorHero = () => {
       {/* Top Row: Back and Title */}
       <View style={styles.topRow} className='mt-4'>
         <TouchableOpacity style={styles.iconCircle} onPress={() => router.replace('/') }>
-          <Ionicons name="arrow-back" size={22} color="#000" />
+          <Ionicons name="arrow-back-circle" size={22} color="#000" />
         </TouchableOpacity>
         <Text
           style={styles.title}
