@@ -2,6 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { CircularProgress } from 'react-native-circular-progress';
+import { DigestionCard } from './digestion';
+import { EnergyCard } from './energy';
+import { MenstrualCycleCard } from './mis';
 
 const { width } = Dimensions.get('window');
 
@@ -122,138 +125,9 @@ const SleepTrackerCard = () => {
   );
 };
 
-// Digestion Card Component
-const DigestionCard = () => {
-  const digestionStatus = 'proper'; // Can be 'proper', 'poor', 'moderate'
-  
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'proper': return '#10B981';
-      case 'poor': return '#F59E0B';
-      case 'moderate': return '#F97316';
-      default: return '#10B981';
-    }
-  };
-  
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'proper': return 'Proper';
-      case 'poor': return 'Poor';
-      case 'moderate': return 'Moderate';
-      default: return 'Proper';
-    }
-  };
-  
-  const getStatusMessage = (status: string) => {
-    switch (status) {
-      case 'proper': return 'Your digestive system is working well';
-      case 'poor': return 'Consider dietary adjustments';
-      case 'moderate': return 'Your digestion needs attention';
-      default: return 'Your digestive system is working well';
-    }
-  };
 
-  return (
-    <View style={styles.mediumCard}>
-      <View style={styles.cardHeader}>
-        <View style={styles.cardHeaderLeft}>
-          <Text style={styles.cardTitle}>Digestion</Text>
-          <Ionicons name="restaurant-outline" size={18} color={getStatusColor(digestionStatus)} />
-        </View>
-        <View style={[styles.digestionStatusBadge, { backgroundColor: getStatusColor(digestionStatus) }]}>
-          <Text style={styles.digestionStatusText}>{getStatusText(digestionStatus)}</Text>
-        </View>
-      </View>
-      
-      <View style={styles.cardBody}>
-        <View style={styles.digestionContent}>
-          <View style={styles.digestionStatusSection}>
-            <Text style={styles.statusLabel}>Status:</Text>
-            <Text style={[styles.digestionStatusText, { color: getStatusColor(digestionStatus) }]}>
-              {getStatusText(digestionStatus)}
-            </Text>
-          </View>
-          
-          <View style={styles.digestionMessage}>
-            <Text style={[styles.digestionSubtitle, { color: getStatusColor(digestionStatus) }]}>
-              {getStatusMessage(digestionStatus)}
-            </Text>
-          </View>
-          
-          <View style={styles.digestionDetails}>
-            <Text style={styles.lastLoggedLabel}>Last Logged: 2:30 PM</Text>
-            <Text style={styles.lastLoggedMeal}>Lunch – Rice & Lentils</Text>
-          </View>
-          
-          <View style={styles.digestionMetrics}>
-            <View style={styles.metricItem}>
-              <Ionicons name="time-outline" size={16} color="#6B7280" />
-              <Text style={styles.metricValue}>3</Text>
-              <Text style={styles.metricLabel}>Meals</Text>
-            </View>
-            <View style={styles.metricItem}>
-              <Ionicons name="water-outline" size={16} color="#6B7280" />
-              <Text style={styles.metricValue}>2.5L</Text>
-              <Text style={styles.metricLabel}>Water</Text>
-            </View>
-            <View style={styles.metricItem}>
-              <Ionicons name="trending-up-outline" size={16} color="#6B7280" />
-              <Text style={styles.metricValue}>85%</Text>
-              <Text style={styles.metricLabel}>Score</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    </View>
-  );
-};
 
-// Heart Rate Card Component
-const HeartRateCard = () => {
-  return (
-    <View style={styles.smallCard}>
-      <View style={styles.cardHeader}>
-        <View style={styles.cardHeaderLeft}>
-          <Ionicons name="heart-outline" size={18} color="#EF4444" />
-          <Text style={styles.cardTitle}>GAiNT H</Text>
-        </View>
-      </View>
-      
-      <View style={styles.cardBody}>
-        <Text style={styles.heartValue}>3</Text>
-        <Text style={styles.heartUnit}>bpm</Text>
-      </View>
-      <View style={styles.cardBody}>
-      <Text style={styles.heartValue}>3</Text>
-      <Text style={styles.heartUnit}>GAINT IS A GANDU</Text>
-        
 
-      </View>
-
-      
-    </View>
-    
-  );
-};
-
-// Calories Card Component
-const CaloriesCard = () => {
-  return (
-    <View style={styles.smallCard}>
-      <View style={styles.cardHeader}>
-        <View style={styles.cardHeaderLeft}>
-          <Ionicons name="flame-outline" size={18} color="#22C55E" />
-          <Text style={styles.cardTitle}>Calories</Text>
-        </View>
-      </View>
-      
-      <View style={styles.cardBody}>
-        <Text style={styles.caloriesValue}>245</Text>
-        <Text style={styles.caloriesUnit}>Kcal</Text>
-      </View>
-    </View>
-  );
-};
 
 // Main Activity Component
 export default function Activity() {
@@ -274,7 +148,7 @@ export default function Activity() {
             <DigestionCard />
           </View>
           <View style={styles.smallCardContainer}>
-            <HeartRateCard />
+            <MenstrualCycleCard />
           </View>
         </View>
         
@@ -287,7 +161,7 @@ export default function Activity() {
             <WaterIntakeCard />
           </View>
           <View style={styles.largeCardContainer}>
-            <CaloriesCard />
+            <EnergyCard />
           </View>
         </View>
       </View>
@@ -326,7 +200,7 @@ const styles = StyleSheet.create({
     height: 256,
   },
   mediumCardContainer: {
-    height: 192,
+    height: 210,
   },
   smallCardContainer: {
     height: 128,
@@ -540,91 +414,7 @@ const styles = StyleSheet.create({
     color: '#F59E0B',
   },
   
-  // Digestion Specific Styles
-  digestionContent: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  digestionStatusSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-    gap: 8,
-  },
-  statusLabel: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#374151',
-  },
-  digestionMessage: {
-    marginBottom: 16,
-  },
-  digestionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#10B981',
-    marginBottom: 6,
-  },
-  digestionSubtitle: {
-    fontSize: 14,
-    color: '#6B7280',
-    fontWeight: '500',
-  },
-  digestionDetails: {
-    marginBottom: 20,
-  },
-  lastLoggedLabel: {
-    fontSize: 13,
-    color: '#6B7280',
-    marginBottom: 4,
-  },
-  lastLoggedMeal: {
-    fontSize: 14,
-    color: '#374151',
-    fontWeight: '500',
-  },
-  digestionStatus: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#10B981',
-    marginBottom: 4,
-  },
-  digestionFeeling: {
-    fontSize: 14,
-    color: '#374151',
-    marginBottom: 8,
-  },
-  digestionMetrics: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 8,
-  },
-  metricItem: {
-    alignItems: 'center',
-  },
-  metricValue: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#374151',
-    marginTop: 4,
-  },
-  metricLabel: {
-    fontSize: 11,
-    color: '#6B7280',
-    marginTop: 2,
-  },
-  digestionStatusBadge: {
-    backgroundColor: '#10B981',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 8,
-  },
-  digestionStatusText: {
-    fontSize: 10,
-    fontWeight: '600',
-    color: 'white',
-    letterSpacing: 0.1,
-  },
+
   
   // Simple Value Styles
   exerciseValue: {
@@ -638,28 +428,8 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     textAlign: 'center',
   },
-  heartValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#EF4444',
-    textAlign: 'center',
-  },
-  heartUnit: {
-    fontSize: 12,
-    color: '#6B7280',
-    textAlign: 'center',
-  },
-  caloriesValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#22C55E',
-    textAlign: 'center',
-  },
-  caloriesUnit: {
-    fontSize: 12,
-    color: '#6B7280',
-    textAlign: 'center',
-  },
+
+
   waterTitle: {
     fontSize: 16,
     fontWeight: '700',
