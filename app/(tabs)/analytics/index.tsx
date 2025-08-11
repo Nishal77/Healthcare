@@ -1,8 +1,10 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { BarChart, LineChart, PieChart } from 'react-native-gifted-charts';
+import { BarChart, PieChart } from 'react-native-gifted-charts';
 import AnalyticsHeader from './AnalyticsHeader';
+import EmojiMoodTracker from './screens/Enerytracker.jsx';
+import { WaterIntakeCard } from './screens/waterintake';
 
 export default function AnalyticsScreen() {
   const lineData = [
@@ -32,25 +34,9 @@ export default function AnalyticsScreen() {
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <AnalyticsHeader />
 
-        <LinearGradient colors={["#FFFFFF", "#F3F4F6"]} style={styles.card} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
-          <Text style={styles.cardTitle}>Fitness Trend</Text>
-          <LineChart
-            data={lineData}
-            curved
-            hideDataPoints
-            thickness={3}
-            color="#EF4444"
-            startFillColor="#FCA5A5"
-            endFillColor="#ffffff00"
-            startOpacity={0.25}
-            endOpacity={0}
-            initialSpacing={0}
-            xAxisThickness={0}
-            yAxisThickness={0}
-            areaChart
-            hideRules
-          />
-        </LinearGradient>
+        <EmojiMoodTracker />
+
+        <WaterIntakeCard />
 
         <LinearGradient colors={["#FFFFFF", "#F3F4F6"]} style={styles.card} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
           <Text style={styles.cardTitle}>Weekly Activity</Text>
@@ -95,7 +81,7 @@ export default function AnalyticsScreen() {
 
 const styles = StyleSheet.create({
   content: {
-    padding: 16,
+    padding: 3,
     paddingBottom: 120,
   },
   
