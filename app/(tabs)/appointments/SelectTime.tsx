@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const MORNING_SLOTS = [
@@ -39,9 +39,14 @@ const EVENING_SLOTS = [
   { id: 32, time: '7:30 PM', period: 'Evening' },
 ];
 
-const SelectTime = () => {
-  const [selected, setSelected] = useState('');
-  const [selectedPeriod, setSelectedPeriod] = useState('Morning');
+interface SelectTimeProps {
+  selectedTime: string;
+  onSelectTime: (time: string) => void;
+}
+
+const SelectTime: React.FC<SelectTimeProps> = ({ selectedTime, onSelectTime }) => {
+  const [selectedPeriod, setSelectedPeriod] = useState<'Morning' | 'Evening'>('Morning');
+  const slots = useMemo(() => (selectedPeriod === 'Morning' ? MORNING_SLOTS : EVENING_SLOTS), [selectedPeriod]);
 
   return (
     <View style={styles.container}>
@@ -75,26 +80,26 @@ const SelectTime = () => {
         </TouchableOpacity>
       </View>
       
-      {/* Time Slots Grid */}
-      <ScrollView 
+      {/* Time Slots - Horizontal */}
+      <ScrollView
+        horizontal
         style={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.horizontalContent}
       >
-        <View style={styles.grid}>
-          {(selectedPeriod === 'Morning' ? MORNING_SLOTS : EVENING_SLOTS).map((slot) => (
+        {slots.map((slot) => {
+          const isSelected = selectedTime === slot.time;
+          return (
             <TouchableOpacity
               key={slot.id}
-              style={[styles.slot, selected === slot.time && styles.selectedSlot]}
-              onPress={() => setSelected(slot.time)}
-              activeOpacity={0.8}
+              style={[styles.slotPill, isSelected && styles.slotPillSelected]}
+              onPress={() => onSelectTime(slot.time)}
+              activeOpacity={0.85}
             >
-              <Text style={[styles.slotText, selected === slot.time && styles.selectedSlotText]}>
-                {slot.time}
-              </Text>
+              <Text style={[styles.pillText, isSelected && styles.pillTextSelected]}>{slot.time}</Text>
             </TouchableOpacity>
-          ))}
-        </View>
+          );
+        })}
       </ScrollView>
     </View>
   );
@@ -142,49 +147,40 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
   },
   activePeriodButton: {
-    backgroundColor: '#3B82F6',
-    borderColor: '#3B82F6',
+    backgroundColor: '#000000',
+    borderColor: '#000000',
   },
   activePeriodText: {
     color: '#fff',
   },
   scrollContainer: {
-    maxHeight: 220,
+    maxHeight: 64,
   },
-  scrollContent: {
-    paddingBottom: 8,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    gap: 10,
-  },
-  slot: {
-    width: '30%',
-    aspectRatio: 1.1,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: '#E5E7EB',
+  horizontalContent: {
+    paddingHorizontal: 4,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-    backgroundColor: '#fff',
-    paddingHorizontal: 6,
   },
-  selectedSlot: {
-    backgroundColor: '#3B82F6',
-    borderColor: '#3B82F6',
+  slotPill: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 999,
+    backgroundColor: '#F3F4F6',
+    marginHorizontal: 6,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
   },
-  slotText: {
-    fontSize: 13,
-    color: '#374151',
-    fontWeight: '600',
+  slotPillSelected: {
+    backgroundColor: '#000000',
+    borderColor: '#000000',
+  },
+  pillText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#111827',
     fontFamily: 'Roboto-Regular',
-    textAlign: 'center',
   },
-  selectedSlotText: {
-    color: '#fff',
+  pillTextSelected: {
+    color: '#FFFFFF',
   },
 });
 

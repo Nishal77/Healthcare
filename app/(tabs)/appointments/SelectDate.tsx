@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const ACTIVE_BG = '#516D28';
@@ -14,9 +14,13 @@ function getDateArray() {
   return arr;
 }
 
-const SelectDate = () => {
+interface SelectDateProps {
+  selectedDate: Date;
+  onSelectDate: (date: Date) => void;
+}
+
+const SelectDate: React.FC<SelectDateProps> = ({ selectedDate, onSelectDate }) => {
   const dates = getDateArray();
-  const [selected, setSelected] = useState(dates[0].toDateString());
 
   return (
     <View className=' rounded '>
@@ -25,7 +29,7 @@ const SelectDate = () => {
           const isToday = idx === 0;
           const isTomorrow = idx === 1;
           const isEnabled = isToday || isTomorrow;
-          const isSelected = selected === date.toDateString();
+          const isSelected = selectedDate.toDateString() === date.toDateString();
           return (
             <TouchableOpacity
               key={date.toDateString()}
@@ -34,7 +38,7 @@ const SelectDate = () => {
                 isEnabled && isSelected && styles.activeBox,
                 !isEnabled && styles.disabledBox
               ]}
-              onPress={() => isEnabled && setSelected(date.toDateString())}
+              onPress={() => isEnabled && onSelectDate(date)}
               activeOpacity={isEnabled ? 0.8 : 1}
               disabled={!isEnabled}
             >
@@ -67,43 +71,43 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dateBox: {
-    width: 54,
-    height: 74,
-    borderRadius: 8,
+    width: 64,
+    height: 84,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 4,
-    backgroundColor: 'transparent',
+    backgroundColor: '#F3F4F6',
   },
   activeBox: {
-    backgroundColor: ACTIVE_BG,
+    backgroundColor: '#000000',
   },
   disabledBox: {
     opacity: 0.45,
   },
   day: {
-    fontSize: 13,
-    color: '#888',
+    fontSize: 12,
+    color: '#6B7280',
     fontWeight: '600',
     marginBottom: 1,
   },
   date: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#222',
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#111827',
     marginBottom: 1,
   },
   month: {
     fontSize: 11,
-    color: '#bbb',
-    fontWeight: '500',
+    color: '#9CA3AF',
+    fontWeight: '600',
     marginTop: 1,
   },
   activeText: {
     color: '#fff',
   },
   disabledText: {
-    color: '#bbb',
+    color: '#D1D5DB',
   },
 });
 

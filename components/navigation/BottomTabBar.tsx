@@ -25,7 +25,7 @@ export function BottomTabBar({ state, navigation }: TabBarProps) {
     { name: 'index', label: 'Home', icon: 'home-outline', activeIcon: 'home' },
     { name: 'appointments/index', label: 'Visit', icon: 'calendar-number-outline', activeIcon: 'calendar' },
     { name: 'routine/index', label: 'Routine', icon: 'repeat-outline', activeIcon: 'time' },
-    { name: 'records/index', label: 'Records', icon: 'folder-open-outline', activeIcon: 'document-text' },
+    { name: 'analytics/index', label: 'Analytics', icon: 'stats-chart-outline', activeIcon: 'stats-chart' },
     { name: 'profile/index', label: 'Profile', icon: 'person-outline', activeIcon: 'person' },
   ];
 
@@ -34,8 +34,8 @@ export function BottomTabBar({ state, navigation }: TabBarProps) {
       <View style={styles.container}>
       {Platform.OS === 'ios' && (
         <BlurView
-          tint="light"
-          intensity={80}
+          tint="dark"
+          intensity={60}
           style={StyleSheet.absoluteFill}
         />
       )}
@@ -63,17 +63,17 @@ export function BottomTabBar({ state, navigation }: TabBarProps) {
             <TouchableOpacity
               key={tab.name}
               onPress={onPress}
-              style={styles.tab}
+              style={[styles.tab, isFocused && styles.activeTab]}
               activeOpacity={0.7}
             >
               <Ionicons
                 name={(isFocused ? tab.activeIcon : tab.icon) as any}
                 size={24}
-                color={isFocused ? '#FFFFFF' : '#AAB49A'}
+                color="#FFFFFF"
               />
               <Text style={[
                 styles.label,
-                { color: isFocused ? '#FFFFFF' : '#AAB49A' }
+                { color: isFocused ? '#FFFFFF' : 'rgba(255,255,255,0.7)' }
               ]}>
                 {tab.label}
               </Text>
@@ -101,12 +101,13 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   container: {
-    backgroundColor: '#283618',
+    backgroundColor: '#000000',
     borderRadius: 40,
     height: Platform.OS === 'ios' ? 68 : 56,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 0,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
     overflow: 'hidden',
   },
   content: {
@@ -122,6 +123,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 8,
+    paddingBottom: 8,
+    borderRadius: 28,
+    marginHorizontal: 2,
+  },
+  activeTab: {
+    backgroundColor: 'rgba(255,255,255,0.08)',
   },
   label: {
     fontSize: 12,

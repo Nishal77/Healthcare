@@ -33,9 +33,9 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="records/index"
+          name="analytics/index"
           options={{
-            href: '/records',
+            href: '/analytics',
           }}
         />
         <Tabs.Screen
