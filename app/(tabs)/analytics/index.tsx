@@ -1,79 +1,27 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { BarChart, PieChart } from 'react-native-gifted-charts';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import AnalyticsHeader from './AnalyticsHeader';
+import WeeklyDigestionAnalytics from './screens/digestionreport.jsx';
 import EmojiMoodTracker from './screens/Enerytracker.jsx';
-import { WaterIntakeCard } from './screens/waterintake';
+import MealTimingConsistency from './screens/mealanaltics.tsx';
+import PeriodTracker from './screens/PeriodTracker.jsx';
+import SleepQualityRing from './screens/sleepquality.jsx';
+import { WaterIntakeCard } from './screens/waterintake.tsx';
 
 export default function AnalyticsScreen() {
-  const lineData = [
-    { value: 20 }, { value: 35 }, { value: 25 }, { value: 50 }, { value: 40 }, { value: 60 }, { value: 55 },
-    { value: 70 }, { value: 65 }, { value: 80 }, { value: 60 }, { value: 75 },
-  ];
-
-  const barData = [
-    { value: 40, label: 'Mon' },
-    { value: 20, label: 'Tue' },
-    { value: 50, label: 'Wed' },
-    { value: 35, label: 'Thu' },
-    { value: 70, label: 'Fri' },
-    { value: 55, label: 'Sat' },
-    { value: 30, label: 'Sun' },
-  ];
-
-  const pieData = [
-    { value: 45, color: '#3B82F6', text: '45%' },
-    { value: 25, color: '#10B981', text: '25%' },
-    { value: 15, color: '#F59E0B', text: '15%' },
-    { value: 15, color: '#EF4444', text: '15%' },
-  ];
-
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F8FA' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <AnalyticsHeader />
 
         <EmojiMoodTracker />
 
+        <SleepQualityRing />
+
         <WaterIntakeCard />
-
-        <LinearGradient colors={["#FFFFFF", "#F3F4F6"]} style={styles.card} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
-          <Text style={styles.cardTitle}>Weekly Activity</Text>
-          <BarChart
-            data={barData}
-            barWidth={22}
-            noOfSections={4}
-            spacing={18}
-            frontColor="#3B82F6"
-            yAxisThickness={0}
-            xAxisThickness={0}
-            xAxisLabelTextStyle={styles.axisText}
-            hideRules
-            barBorderRadius={6}
-          />
-        </LinearGradient>
-
-        <LinearGradient colors={["#FFFFFF", "#F3F4F6"]} style={styles.card} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
-          <Text style={styles.cardTitle}>Breakdown</Text>
-          <PieChart
-            data={pieData}
-            donut
-            innerRadius={60}
-            radius={90}
-            showText
-            textColor="#111827"
-            textSize={12}
-            focusOnPress
-            sectionAutoFocus
-            centerLabelComponent={() => (
-              <View style={{ alignItems: 'center' }}>
-                <Text style={{ fontSize: 20, fontWeight: '800', color: '#111827', fontFamily: 'Roboto-Regular' }}>100%</Text>
-                <Text style={{ fontSize: 12, color: '#6B7280', fontFamily: 'Roboto-Regular' }}>Total</Text>
-              </View>
-            )}
-          />
-        </LinearGradient>
+        <MealTimingConsistency />
+        <WeeklyDigestionAnalytics />
+        <PeriodTracker />
       </ScrollView>
     </SafeAreaView>
   );

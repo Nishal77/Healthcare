@@ -23,7 +23,9 @@ export default function EmojiMoodTracker() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Weekly Mood Tracker</Text>
+      
+      <Text style={styles.header}>How are you feeling this week?</Text>
+      <Text style={styles.subtext}>Weekly Mood Tracker</Text>
       <View style={[styles.row, { paddingHorizontal: screenPadding, columnGap: gap }]}>
         {weekData.map((item, index) => (
           <LinearGradient
@@ -49,11 +51,18 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 8,
+    fontWeight: 'bold',
     color: '#333',
     paddingHorizontal: 9,
+    fontFamily: 'Roboto-Bold',
+  },
+  subtext: {
+    fontSize: 12,
+    color: '#6b7280',
     fontFamily: 'Roboto-Regular',
+    fontWeight: '500',
+    paddingHorizontal: 9,
+    marginBottom: 8,
   },
   row: {
     flexDirection: 'row',
